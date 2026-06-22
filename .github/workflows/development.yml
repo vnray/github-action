@@ -1,0 +1,40 @@
+# DEVELOPMENT
+# Triggers: every push to development branch
+# No approval needed — just test + build automatically
+
+name: Development
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_ENV: development   # orange banner in the app
+
+      # Replace this with your real deploy step
+      # e.g. Netlify, Vercel, S3, etc.
+      - name: Deploy to development
+        run: echo "Deploy to https://dev.yourapp.com"

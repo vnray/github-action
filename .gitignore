@@ -1,0 +1,5 @@
+# create .gitignore file and add these lines
+echo "node_modules
+dist
+.env
+.env.local" > .gitignore
