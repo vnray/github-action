@@ -1,32 +1,32 @@
 # STAGING
-# Triggers: when a PR from development is merged into staging
-# Requires PR approval before merge (enforced via GitHub branch protection rules)
-# This is the "review gate" — no direct push allowed
+# Triggers: every push to staging branch
+# Used for QA/UAT testing
 
 name: Staging
 
 on:
   push:
     branches:
-      - staging     # only fires after an approved PR is merged into staging
-                    # direct pushes are blocked by branch protection rules
+      - staging
 
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
 
+    environment: staging
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run tests
         run: npm run test
@@ -34,8 +34,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_ENV: staging     # blue banner in the app
+          VITE_ENV: staging
 
-      # Replace with your real staging deploy step
       - name: Deploy to staging
-        run: echo "Deploy to https://staging.yourapp.com"
+        run: echo "Deploy to staging environment"

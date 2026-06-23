@@ -1,32 +1,32 @@
 # PRODUCTION
-# Triggers: when a PR from staging is merged into production
-# Requires PR approval before merge (enforced via GitHub branch protection rules)
-# This is the final gate — only fully tested + approved code reaches here
+# Triggers: every push to production branch
+# Can require approval via GitHub Environment
 
 name: Production
 
 on:
   push:
     branches:
-      - production    # only fires after an approved PR is merged into production
-                      # direct pushes are blocked by branch protection rules
+      - production
 
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
 
+    environment: production
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run tests
         run: npm run test
@@ -34,8 +34,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_ENV: production    # green banner in the app
+          VITE_ENV: production
 
-      # Replace with your real production deploy step
       - name: Deploy to production
-        run: echo "Deploy to https://yourapp.com"
+        run: echo "Deploy to production environment"
