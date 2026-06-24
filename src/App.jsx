@@ -19,7 +19,7 @@ function App() {
 
       <div className="container">
         <h1>Hello World ⚛️</h1>
-        <p>Your React starter is working.</p>
+        <p>Your React starter is working.stttt</p>
       </div>
     </div>
   )
