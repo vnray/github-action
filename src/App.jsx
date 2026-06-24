@@ -14,7 +14,7 @@ function App() {
     <div>
       {/* Environment banner — shows which env this build is from */}
       <div style={{ background: bannerColor[env], color: '#fff', textAlign: 'center', padding: '8px', fontSize: '13px', fontWeight: 600 }}>
-        {env.toUpperCase()} environment
+        {env.toUpperCase()} environment dev to stage
       </div>
 
       <div className="container">
